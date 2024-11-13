@@ -19,7 +19,7 @@ def webhook():
     # Download the image from the received URL
     response = requests.get(image_url)
     img = Image.open(BytesIO(response.content))
-
+    email=data.get('email')
     # Process the image (for example, crop and enlarge)
     width, height = img.size
 
@@ -53,7 +53,8 @@ def webhook():
     # Open the processed image and prepare it to send
     with open(processed_image_path, 'rb') as img_file:
         files = {
-            'image': (processed_image_path, img_file, 'image/png')
+            'image': (processed_image_path, img_file, 'image/png'),
+            'email': email
         }
 
         # Send the image to Make using a POST request with multipart/form-data
