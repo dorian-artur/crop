@@ -53,12 +53,14 @@ def webhook():
     # Open the processed image and prepare it to send
     with open(processed_image_path, 'rb') as img_file:
         files = {
-            'image': (processed_image_path, img_file, 'image/png'),
-            'email': email
+        'image': (processed_image_path, open(processed_image_path, 'rb'), 'image/png')
+        }
+        data = {
+        'email': email
         }
 
         # Send the image to Make using a POST request with multipart/form-data
-        response = requests.post(webhook_url, files=files)
+        response = requests.post(webhook_url, files=files, data)
 
     # Check the response from the Webhook
     if response.status_code == 200:
