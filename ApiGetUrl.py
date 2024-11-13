@@ -4,6 +4,9 @@ import requests
 from io import BytesIO
 
 app = Flask(__name__)
+@app.route("/")
+def home():
+    return "Webhook service is running."
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
