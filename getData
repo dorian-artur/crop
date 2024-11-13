@@ -1,0 +1,40 @@
+from flask import Flask, request, jsonify
+from PIL import Image
+import requests
+from io import BytesIO
+
+app = Flask(__name__)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    # Recibir la notificación de Make
+    data = request.json
+
+    # Extraer los datos de la notificación
+    image_url = data.get('image_url')  # Asumimos que la URL de la imagen se envía en 'image_url'
+
+    # Descargar la imagen desde la URL recibida
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+
+    # Procesar la imagen (por ejemplo, recortar y ampliar)
+    width, height = img.size
+    left = width / 2
+    top = 0
+    right = width
+    bottom = height
+
+    cropped_img = img.crop((left, top, right, bottom))
+
+    # Ampliar la imagen (por ejemplo, duplicar el tamaño)
+    enlarged_img = cropped_img.resize((int(cropped_img.width * 2), int(cropped_img.height * 2)))
+
+    # Guardar la imagen procesada en un archivo temporal
+    processed_image_path = 'processed_image.png'
+    enlarged_img.save(processed_image_path)
+
+    # Puedes devolver la URL o confirmar el procesamiento
+    return jsonify({"message": "Image processed successfully", "processed_image_path": processed_image_path})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
