@@ -60,7 +60,7 @@ def webhook():
         }
 
         # Send the image to Make using a POST request with multipart/form-data
-        response = requests.post(webhook_url, files=files, data)
+        response = requests.post(webhook_url, files=files, data=data)
 
     # Check the response from the Webhook
     if response.status_code == 200:
