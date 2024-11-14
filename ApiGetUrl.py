@@ -48,7 +48,7 @@ def webhook():
     processed_image_path = 'processed_image.png'
 
     # URL of the Make Webhook
-    webhook_url = 'https://hook.us2.make.com/m0hyhqp43nblmg0dhm5pfuinkca25aoo'
+    webhook_url = 'https://hook.us2.make.com/ayrjp38k0lwtks35vh4bnvpmv0pes0po'
 
     # Open the processed image and prepare it to send
     with open(processed_image_path, 'rb') as img_file:
